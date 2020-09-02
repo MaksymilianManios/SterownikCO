@@ -135,6 +135,13 @@ public class PiecCO extends Thread {
     public Integer getCzasPracyAktywnej(){
         return czasPracyAktywnej;
     }
+    public String getNadmychDmucha(){
+        if(nadmuchPracuje){
+            return "Z Nadmuchem";
+        }else{
+            return "Bez Nadmuchu";
+        }
+    }
     // Settery :
     public void SetCzasPracyAktywnej(int CzasPracyAktywnej,int CzasPracyZNadmuchem){
         if(CzasPracyAktywnej>CZAS_MAKSYMALNY_CALKOWITY){
@@ -235,7 +242,6 @@ public class PiecCO extends Thread {
                     OFF_PodajnikPracuje();
                 }
             }while(czyMaSiePalic);
-
         }
     });
 }
