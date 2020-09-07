@@ -24,12 +24,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:onClick="zmniejsz"
         android:text="-"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.885"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plus"
-        android:onClick="zmniejsz"/>
+        app:layout_constraintTop_toBottomOf="@+id/plus" />
 
     <Button
         android:id="@+id/opcje"
@@ -51,13 +51,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="103dp"
+        android:onClick="wyjscie"
         android:text="Wyjście"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.885"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opcje"
-        android:onClick="wyjscie"/>
+        app:layout_constraintTop_toBottomOf="@+id/opcje" />
 
     <TextView
         android:id="@+id/ekran"
@@ -160,5 +160,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kontrolkaPracyRecznej"
         app:layout_constraintVertical_bias="0.128" />
+
+    <Button
+        android:id="@+id/plus_w_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="1dp"
+        android:onClick="zwiekszLiczbe"
+        android:text="+1"
+        app:layout_constraintBottom_toTopOf="@+id/plus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/kontrolkaPodajnika"
+        app:layout_constraintTop_toBottomOf="@+id/ekran"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/zatwierdzanie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="zatwierdz"
+        android:text="MENU+"
+        app:layout_constraintBottom_toTopOf="@+id/exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.779"
+        app:layout_constraintStart_toEndOf="@+id/kontrolkaPompy"
+        app:layout_constraintTop_toBottomOf="@+id/minus" />
+
+    <Button
+        android:id="@+id/minus_w_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="zmniejszLiczbe"
+        android:text="-1"
+        app:layout_constraintBottom_toTopOf="@+id/opcje"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintStart_toEndOf="@+id/kontrolkaNadmuchu"
+        app:layout_constraintTop_toBottomOf="@+id/plus" />
+
+    <Button
+        android:id="@+id/ustaw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="11dp"
+        android:onClick="ustawienia"
+        android:text="menu++"
+        app:layout_constraintBottom_toTopOf="@+id/exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.779"
+        app:layout_constraintStart_toEndOf="@+id/kontrolkaPompy"
+        app:layout_constraintTop_toBottomOf="@+id/minus"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -100,6 +100,9 @@ public class Sterownik extends PiecCO{
         this.czasPrzerwyPodajnika = czasPrzerwyPodajnika;
     }
 
+    public void setHistereza(Integer histereza) {
+        this.histereza = histereza;
+    }
 
     public void TransferPaliwaZasobnikPalenisko(){
         ZabierzPaliwoZZasobnika();
