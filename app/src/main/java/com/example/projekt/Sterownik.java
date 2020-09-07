@@ -1,12 +1,15 @@
 package com.example.projekt;
 
-public class Sterownik extends PiecCO{
+public class Sterownik extends PiecCO {
     //public Piec piec;
     private Boolean pracaPodajnika;
     private Boolean pracaNadmuchu;
     private Boolean pracaPompy;
     private Boolean ogien;
     private Integer tempZadana;
+
+
+
     private Integer histereza;
     private Integer czasPracyPodajnika;
     private Integer czasPrzerwyPodajnika;
@@ -14,18 +17,18 @@ public class Sterownik extends PiecCO{
     private Integer czasPrzerwyPodtrzymania;
     private PiecCO piecCO;
 
-    public Sterownik(){
+    public Sterownik() {
 
         this.pracaNadmuchu = false;
         this.pracaPodajnika = false;
         this.pracaPompy = false;
-        this.tempZadana=60;
+        this.tempZadana = 60;
         this.czasPracyPodajnika = 20;
         this.czasPrzerwyPodajnika = 40;
         this.temperaturaZalaczeniaPompy = 35;
         this.czasPrzerwyPodtrzymania = 5;
         this.histereza = 5;
-        this.ogien = false;
+        this.ogien = true;
 
     }
 
@@ -105,146 +108,65 @@ public class Sterownik extends PiecCO{
         this.histereza = histereza;
     }
 
-    public void TransferPaliwaZasobnikPalenisko(){
+    public Integer getHistereza() {
+        return histereza;
+    }
+
+    public void TransferPaliwaZasobnikPalenisko() {
         ZabierzPaliwoZZasobnika();
         UzpelnijPaliwoWPiecu();
     } // Symulacja pracy slimaka
 
-    private void ZabierzPaliwoZZasobnika(){
-        if(getZapasPaliwaWZasobniku() <= DAWKA_PALIWA){
+    private void ZabierzPaliwoZZasobnika() {
+        if (getZapasPaliwaWZasobniku() <= DAWKA_PALIWA) {
             UzpelnijZasobnikPaliwa();
         }
         setZapasPaliwaWZasobniku(getZapasPaliwaWZasobniku() - DAWKA_PALIWA);
     } // Zabiera dawke paliwa z zasobnika
 
-    private void UzpelnijPaliwoWPiecu(){
+    public void UzpelnijPaliwoWPiecu() {
         setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() + DAWKA_PALIWA);
     } // Uzupelnia palenisko o dawke paliwa
 
-    private void UzpelnijZasobnikPaliwa(){
+    private void UzpelnijZasobnikPaliwa() {
         setZapasPaliwaWZasobniku(POJEMNOSC_ZASOBNIKA);
     }  // Wypelnia zasobnik paliwa
 
-    public boolean RozpalPiecCO(){
-        if(getPoziomPaliwaWPiecu() <= 0){
+    public boolean RozpalPiecCO() {
+
+        if (getPoziomPaliwaWPiecu() <= 0) {
             return false;
         }
         setPiecSiePali(true);
         setOgien(true);
         return getPiecSiePali();
+
+
+
     }
 
-    public void ZamienPaliwoNaCieplo(){
+    public void ZamienPaliwoNaCieplo() {
         SpalPaliwo();
         PodgrzejWode();
     }
 
-    public void szybkoscNagrzewania(){
-        if(getOgien()){
-            if(getPracaNadmuchu()){
+    public void szybkoscNagrzewania() {
+        if (getOgien()) {
+            if (getPracaNadmuchu()) {
                 setGrzanie(2);
                 setSpalanie(20);
-            }else{
-                setGrzanie(1);;
+            } else {
+                setGrzanie(1);
                 setSpalanie(10);
             }
-        }else {
+        } else {
             setGrzanie(0);
             setSpalanie(0);
         }
-        if(getPracaPompy())
-        {
+        if (getPracaPompy()) {
             setGrzanie(getGrzanie() - 2);
         }
     }
 
-    public Thread thread = new Thread(new Runnable() {
-        public void run() {
-            do {
-
-                if (getOgien()) {
-
-                    if(getTemperatura()>=getTempZadana()){
-                        setPracaNadmuchu(false);
-                        setPracaPompy(true);
-                        /*
-                        try {
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                         */
-                    }else{
-                        if(!(getTemperatura() > (getTempZadana() - histereza))) {
-                            setPracaNadmuchu(true);
-                            setPracaPompy(false);
-                        }
-                    }
-
-                    if(getPoziomPaliwaWPiecu()<= 10){
-                        setPracaPodajnika(true);
-                        UzpelnijPaliwoWPiecu();
-                        /*
-                            try {
-                                szybkoscNagrzewania();
-                                ZamienPaliwoNaCieplo();
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        */
-
-
-
-                    }else{
-                        setPracaPodajnika(false);
-                    }
-
-                    try {
-                        szybkoscNagrzewania();
-                        ZamienPaliwoNaCieplo();
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    //setPracaNadmuchu(true);
-                    /*
-                    for(int licznikPomocniczy = 0;licznikPomocniczy<czasPracyZNadmuchem  && getTemperatura() <= getTempZadana();licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    setPracaNadmuchu(false);
-                    for(int licznikPomocniczy = 0; licznikPomocniczy<czasPracyBezNadmuchu && getTemperatura() <= TEMPERATURA_DOCELOWA;licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                     */
-                } else {
-                    //setPracaPodajnika(true);
-                    RozpalPiecCO();
-
-                    //setPracaPodajnika(false);
-                }
-
-
-            }while(true);
-        }
-    });
-
 }
+

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public Switch switcha;
     public Sterownik sterownik;
     public Menu menu;
-    private  Button btn;
+    private Button btn;
     private View view;
 
 
@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         //setContentView(R.layout.piec_layout);
         sterownik = new Sterownik();
-        sterownik.thread.start();
+        //sterownik.thread.start();
         this.thread.start();
+        this.piec.start();
         menuWlaczone = false;
         ustawienia_wlaczone =false;
         menu = new Menu(context);
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     public void ustawienia(View view){
         ustawienia_wlaczone = true;
         wejscie_do_ustawien();
+        menu.setTrybManualny();
 
     }
 
@@ -169,8 +171,17 @@ public class MainActivity extends AppCompatActivity {
             ustawienia_wlaczone = false;
             liczba_w_ustawieniach = 0;
         }else {
-            menu.setTrybManualny();
+            if(menuWlaczone)
+            {
+                menuWlaczone = false;
+                licznik = 1;
+                //wyjscie_z_menu();
+                wyjscie_z_ustawien();
+                ustawienia_wlaczone = false;
+                liczba_w_ustawieniach = 0;
+            }else menu.setTrybManualny();
         }
+
     }
 
     /*public Thread watek_zliczajacy = new Thread(new Runnable() {
@@ -194,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 while (!thread.isInterrupted()) {
                     Thread.sleep(1000);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -239,6 +251,110 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    public Thread piec = new Thread() {
 
+        @Override
+        public void run() {
+            do {
+
+                if (sterownik.getOgien()) {
+                    if (!menu.getTrybManualny()) {
+
+                        if (sterownik.getTemperatura() >= sterownik.getTempZadana()) {
+                            sterownik.setPracaNadmuchu(false);
+                            sterownik.setPracaPompy(true);
+                        /*
+                        try {
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                         */
+                        } else {
+                            if (!(sterownik.getTemperatura() > (sterownik.getTempZadana() - sterownik.getHistereza()))) {
+                                sterownik.setPracaNadmuchu(true);
+                                sterownik.setPracaPompy(false);
+                            }
+                        }
+
+                        if (sterownik.getPoziomPaliwaWPiecu() <= 10) {
+                            sterownik.setPracaPodajnika(true);
+                            sterownik.UzpelnijPaliwoWPiecu();
+                        /*
+                            try {
+                                szybkoscNagrzewania();
+                                ZamienPaliwoNaCieplo();
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        */
+
+
+                        } else {
+                            sterownik.setPracaPodajnika(false);
+                        }
+
+                        try {
+                            sterownik.szybkoscNagrzewania();
+                            sterownik.ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        //setPracaNadmuchu(true);
+                    /*
+                    for(int licznikPomocniczy = 0;licznikPomocniczy<czasPracyZNadmuchem  && getTemperatura() <= getTempZadana();licznikPomocniczy++){
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    setPracaNadmuchu(false);
+                    for(int licznikPomocniczy = 0; licznikPomocniczy<czasPracyBezNadmuchu && getTemperatura() <= TEMPERATURA_DOCELOWA;licznikPomocniczy++){
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                     */
+                    }else
+                    {
+                        try {
+                            sterownik.szybkoscNagrzewania();
+                            sterownik.ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                        //setPracaPodajnika(true);
+                     sterownik.RozpalPiecCO();
+
+                        //setPracaPodajnika(false);
+                }
+
+
+            }while(true);
+        }
+    };
 
 }
+
+
+
+
