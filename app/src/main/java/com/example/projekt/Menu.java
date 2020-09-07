@@ -1,20 +1,17 @@
 package com.example.projekt;
 
 import android.content.Context;
-import android.widget.TextView;
-import android.widget.Button;
-import android.view.View;
 import android.widget.Toast;
 
 public class Menu{
 
     private Context context;
+    private Boolean trybManualny = true;
 
-    private Boolean trybManualny = false;
-    public Menu(Context con)
-    {
+    public Menu(Context con) {
         this.context = con;
     }
+
     public Boolean getTrybManualny() { return trybManualny;}
 
     public void setTrybManualny() {

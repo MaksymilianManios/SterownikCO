@@ -26,6 +26,7 @@ public class Sterownik extends PiecCO{
         this.czasPrzerwyPodtrzymania = 5;
         this.histereza = 5;
         this.ogien = false;
+
     }
 
     public Boolean getOgien() {
