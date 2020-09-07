@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void zatwierdz(View view){
-        menu.zatwierdz(licznik, sterownik, liczba_w_ustawieniach);
+        sterownik = menu.zatwierdz(licznik, sterownik, liczba_w_ustawieniach);
     }
 
     public void zwiekszLiczbe(View view){
