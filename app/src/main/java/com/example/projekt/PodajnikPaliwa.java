@@ -9,7 +9,7 @@ public class PodajnikPaliwa {
 
     private Boolean czyWPracyAutomatycznej;
     private Boolean czyPodawacPaliwo;
-
+    private Boolean pracaPodajnika;
     private Integer zbiornikPaliwa;
 
 
@@ -17,6 +17,14 @@ public class PodajnikPaliwa {
         czyWPracyAutomatycznej = true;
         czyPodawacPaliwo = false;
         zbiornikPaliwa = 0;
+    }
+
+    public Boolean getPracaPodajnika() {
+        return pracaPodajnika;
+    }
+
+    public void setPracaPodajnika(Boolean pracaPodajnika) {
+        this.pracaPodajnika = pracaPodajnika;
     }
 
     public void UzupelnijPaliwo(){

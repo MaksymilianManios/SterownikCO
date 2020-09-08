@@ -3,13 +3,8 @@ package com.example.projekt;
 public class Sterownik extends PiecCO {
     //public Piec piec;
     private Boolean pracaPodajnika;
-    private Boolean pracaNadmuchu;
-    private Boolean pracaPompy;
-    private Boolean ogien;
     private Integer tempZadana;
-
-
-
+    private Boolean trybManualny;
     private Integer histereza;
     private Integer czasPracyPodajnika;
     private Integer czasPrzerwyPodajnika;
@@ -19,85 +14,74 @@ public class Sterownik extends PiecCO {
 
     public Sterownik() {
 
-        this.pracaNadmuchu = false;
         this.pracaPodajnika = false;
-        this.pracaPompy = false;
         this.tempZadana = 60;
         this.czasPracyPodajnika = 20;
         this.czasPrzerwyPodajnika = 40;
         this.temperaturaZalaczeniaPompy = 35;
+        dmuchawa.setPredkoscNadmuchu(5);
         this.czasPrzerwyPodtrzymania = 5;
         this.histereza = 5;
-        this.ogien = true;
+        trybManualny = false;
 
     }
 
-    public Boolean getOgien() {
-        return ogien;
-    }
+    //Gettery:
 
-    public void setOgien(Boolean ogien) {
-        this.ogien = ogien;
-    }
 
     public Integer getTemperaturaZalaczeniaPompy() {
         return temperaturaZalaczeniaPompy;
-    }
-
-    public void setTemperaturaZalaczeniaPompy(Integer temperaturaZalaczeniaPompy) {
-        this.temperaturaZalaczeniaPompy = temperaturaZalaczeniaPompy;
     }
 
     public Integer getCzasPrzerwyPodtrzymania() {
         return czasPrzerwyPodtrzymania;
     }
 
-    public void setCzasPrzerwyPodtrzymania(Integer czasPrzerwyPodtrzymania) {
-        this.czasPrzerwyPodtrzymania = czasPrzerwyPodtrzymania;
-    }
-
     public Boolean getPracaPodajnika() {
         return pracaPodajnika;
-    }
-
-    public void setPracaPodajnika(Boolean pracaPodajnika) {
-        this.pracaPodajnika = pracaPodajnika;
-    }
-
-    public Boolean getPracaNadmuchu() {
-        return pracaNadmuchu;
-    }
-
-    public void setPracaNadmuchu(Boolean pracaNadmuchu) {
-        this.pracaNadmuchu = pracaNadmuchu;
-    }
-
-    public Boolean getPracaPompy() {
-        return pracaPompy;
-    }
-
-    public void setPracaPompy(Boolean pracaPompy) {
-        this.pracaPompy = pracaPompy;
     }
 
     public Integer getTempZadana() {
         return tempZadana;
     }
 
-    public void setTempZadana(Integer tempZadana) {
-        this.tempZadana = tempZadana;
-    }
-
     public Integer getCzasPracyPodajnika() {
         return czasPracyPodajnika;
     }
 
-    public void setCzasPracyPodajnika(Integer czasPracyPodajnika) {
-        this.czasPracyPodajnika = czasPracyPodajnika;
-    }
-
     public Integer getCzasPrzerwyPodajnika() {
         return czasPrzerwyPodajnika;
+    }
+
+    public Integer getHistereza() {
+        return histereza;
+    }
+
+    public Boolean getTrybManualny() { return trybManualny;}
+
+
+
+
+    //Settery:
+
+    public void setTemperaturaZalaczeniaPompy(Integer temperaturaZalaczeniaPompy) {
+        this.temperaturaZalaczeniaPompy = temperaturaZalaczeniaPompy;
+    }
+
+    public void setCzasPrzerwyPodtrzymania(Integer czasPrzerwyPodtrzymania) {
+        this.czasPrzerwyPodtrzymania = czasPrzerwyPodtrzymania;
+    }
+
+    public void setPracaPodajnika(Boolean pracaPodajnika) {
+        this.pracaPodajnika = pracaPodajnika;
+    }
+
+    public void setTempZadana(Integer tempZadana) {
+        this.tempZadana = tempZadana;
+    }
+
+    public void setCzasPracyPodajnika(Integer czasPracyPodajnika) {
+        this.czasPracyPodajnika = czasPracyPodajnika;
     }
 
     public void setCzasPrzerwyPodajnika(Integer czasPrzerwyPodajnika) {
@@ -108,65 +92,15 @@ public class Sterownik extends PiecCO {
         this.histereza = histereza;
     }
 
-    public Integer getHistereza() {
-        return histereza;
-    }
-
-    public void TransferPaliwaZasobnikPalenisko() {
-        ZabierzPaliwoZZasobnika();
-        UzpelnijPaliwoWPiecu();
-    } // Symulacja pracy slimaka
-
-    private void ZabierzPaliwoZZasobnika() {
-        if (getZapasPaliwaWZasobniku() <= DAWKA_PALIWA) {
-            UzpelnijZasobnikPaliwa();
-        }
-        setZapasPaliwaWZasobniku(getZapasPaliwaWZasobniku() - DAWKA_PALIWA);
-    } // Zabiera dawke paliwa z zasobnika
-
-    public void UzpelnijPaliwoWPiecu() {
-        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() + DAWKA_PALIWA);
-    } // Uzupelnia palenisko o dawke paliwa
-
-    private void UzpelnijZasobnikPaliwa() {
-        setZapasPaliwaWZasobniku(POJEMNOSC_ZASOBNIKA);
-    }  // Wypelnia zasobnik paliwa
-
-    public boolean RozpalPiecCO() {
-
-        if (getPoziomPaliwaWPiecu() <= 0) {
-            return false;
-        }
-        setPiecSiePali(true);
-        setOgien(true);
-        return getPiecSiePali();
-
-
+    public void setTrybManualny() {
+        if(trybManualny){
+            trybManualny = false;
+        }else trybManualny = true;
 
     }
 
-    public void ZamienPaliwoNaCieplo() {
-        SpalPaliwo();
-        PodgrzejWode();
-    }
 
-    public void szybkoscNagrzewania() {
-        if (getOgien()) {
-            if (getPracaNadmuchu()) {
-                setGrzanie(2);
-                setSpalanie(20);
-            } else {
-                setGrzanie(1);
-                setSpalanie(10);
-            }
-        } else {
-            setGrzanie(0);
-            setSpalanie(0);
-        }
-        if (getPracaPompy()) {
-            setGrzanie(getGrzanie() - 2);
-        }
-    }
+
 
 }
 

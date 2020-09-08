@@ -11,8 +11,11 @@ public class PiecCO extends Thread {
     public static final int POJEMNOSC_PALENISKA = 100;
     public static final int UZUPELNIENIE_ZASOBNIKA = 250;
     public static final int DAWKA_PALIWA = 10;
+
     // NADMUCH
+    public Dmuchawa dmuchawa;
     // POMPA
+    public OEC pompa;
     public static final int TEMPERATURA_DOCELOWA = 60;
     public static final int TEMPERATURA_POKOJOWA = 20;
     public static final int AMPLITUDA_TEMPERATUR = TEMPERATURA_DOCELOWA - TEMPERATURA_POKOJOWA;
@@ -22,7 +25,7 @@ public class PiecCO extends Thread {
 
 
     // zmienne kontrolne :
-    private Boolean piecSiePali;     // <-true jesli sie pali
+    private Boolean ogien;     // <-true jesli sie pali
    /* private Boolean podajnikPracuje; // <-true jesli pracuje
     private Boolean nadmuchPracuje;  // <-true jesli pracuje
     private Boolean pompaPracuje;    // <-true jesli pracuje
@@ -37,13 +40,6 @@ public class PiecCO extends Thread {
     private Integer grzanie = 0;
     private Integer temperatura = 0;
 
-    public Boolean getPiecSiePali() {
-        return piecSiePali;
-    }
-
-    public void setPiecSiePali(Boolean piecSiePali) {
-        this.piecSiePali = piecSiePali;
-    }
 
     public void setPoziomPaliwaWPiecu(Integer poziomPaliwaWPiecu) {
         this.poziomPaliwaWPiecu = poziomPaliwaWPiecu;
@@ -56,47 +52,20 @@ public class PiecCO extends Thread {
 
 
 
-    public PiecCO(){
-        czyMaSiePalic = true;
-        piecSiePali = false;
-       // podajnikPracuje = false;
-       // nadmuchPracuje = false;
-       // pompaPracuje = false;
-        zapasPaliwaWZasobniku = UZUPELNIENIE_ZASOBNIKA*2 ;
-        poziomPaliwaWPiecu = POJEMNOSC_PALENISKA/2;
-        spalanie = 0;
-        temperatura = TEMPERATURA_POKOJOWA;
-        SetCzasPracyAktywnej(CZAS_MAKSYMALNY_CALKOWITY,CZAS_MAKSYMALNY_W_NADMUCHU);
-    }
-
-    public void PodgrzejWode(){
-        setTemperatura(getTemperatura() + getGrzanie());
-    }
-    public void SpalPaliwo(){
-        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() - getSpalanie());
-    }
 
      // Opakowana funkja zapalajaca kontrolke pompy
   // Ustala Wspolczynnik Pracy na podstawie stanu zmiennych kontrolnych
 
 
-   // Rozpal piec, zwraca rezultat operacji
 
-    public void OFF_PiecSiePali(){piecSiePali = false;}
-    private void ON_PiecSiePali(){piecSiePali = true;}
-   /* private void OFF_PodajnikPracuje(){podajnikPracuje = false;}
-    private void ON_PodajnikPracuje(){podajnikPracuje = true;}
-    private void OFF_NadmuchPracuje(){nadmuchPracuje = false;}
-    private void ON_NadmuchPracuje(){nadmuchPracuje = true;}
-    private void OFF_PompaPracuje(){pompaPracuje = false;}
-    private void ON_PompaPracuje(){pompaPracuje = true;}
-
-
-    */
     // Gettery :
    public void setCzasPracyAktywnej(Integer czasPracyAktywnej) {
        this.czasPracyAktywnej = czasPracyAktywnej;
    }
+
+    public Boolean getOgien() {
+        return ogien;
+    }
 
     public Integer getGrzanie() {
         return grzanie;
@@ -162,6 +131,9 @@ public class PiecCO extends Thread {
     public void SetczasPracyBezNadmuchu(){
         czasPracyBezNadmuchu = getCzasPracyAktywnej()-getCzasPracyZNadmuchem();
     }
+    public void setOgien(Boolean ogien) {
+        this.ogien = ogien;
+    }
     public void SetTemperaturaPoPompowaniu(){
         setTemperatura(getTemperatura() - 10);
     } // Ustawia temperature na pokojowa
@@ -180,4 +152,77 @@ public class PiecCO extends Thread {
     } // Ustaw spalanie i grzanie na 2
     */
 
+    //funkcje pieca
+
+    public void RozpalPiecCO() {
+
+        if (getPoziomPaliwaWPiecu() > 0) {
+            setOgien(true);
+        }
+    }
+
+    public void ZamienPaliwoNaCieplo() {
+        SpalPaliwo();
+        PodgrzejWode();
+    }
+
+    public void szybkoscNagrzewania() {
+        if (getOgien()) {
+            if (dmuchawa.getPracaNadmuchu()) {
+                setGrzanie(dmuchawa.getPredkoscNadmuchu());
+                setSpalanie(20);
+            } else {
+                setGrzanie(1);
+                setSpalanie(10);
+            }
+        } else {
+            setGrzanie(0);
+            setSpalanie(0);
+        }
+        if (pompa.getPracaPompy()) {
+            setGrzanie(getGrzanie() - 2);
+        }
+    }
+
+    public void TransferPaliwaZasobnikPalenisko() {
+        ZabierzPaliwoZZasobnika();
+        UzpelnijPaliwoWPiecu();
+    } // Symulacja pracy slimaka
+
+    private void ZabierzPaliwoZZasobnika() {
+        if (getZapasPaliwaWZasobniku() <= DAWKA_PALIWA) {
+            UzpelnijZasobnikPaliwa();
+        }
+        setZapasPaliwaWZasobniku(getZapasPaliwaWZasobniku() - DAWKA_PALIWA);
+    } // Zabiera dawke paliwa z zasobnika
+
+    public void UzpelnijPaliwoWPiecu() {
+        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() + DAWKA_PALIWA);
+    } // Uzupelnia palenisko o dawke paliwa
+
+    private void UzpelnijZasobnikPaliwa() {
+        setZapasPaliwaWZasobniku(POJEMNOSC_ZASOBNIKA);
+    }  // Wypelnia zasobnik paliwa
+
+    public PiecCO(){
+        czyMaSiePalic = true;
+        this.ogien = false;
+        dmuchawa = new Dmuchawa();
+        pompa = new OEC();
+        // podajnikPracuje = false;
+        // nadmuchPracuje = false;
+        // pompaPracuje = false;
+        zapasPaliwaWZasobniku = UZUPELNIENIE_ZASOBNIKA*2 ;
+        poziomPaliwaWPiecu = POJEMNOSC_PALENISKA/2;
+        spalanie = 0;
+        temperatura = TEMPERATURA_POKOJOWA;
+        SetCzasPracyAktywnej(CZAS_MAKSYMALNY_CALKOWITY,CZAS_MAKSYMALNY_W_NADMUCHU);
+    }
+
+    public void PodgrzejWode(){
+        setTemperatura(getTemperatura() + getGrzanie());
+    }
+    public void SpalPaliwo(){
+        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() - getSpalanie());
+    }
 }
