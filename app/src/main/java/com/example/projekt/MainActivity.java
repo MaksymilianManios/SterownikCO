@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         menu = new Menu(context);
         liczba_w_ustawieniach = new Integer[]{1, 0, 0};
         wyjscie_z_ustawien();
-
-
     }
 
     public void wejscie_do_ustawien() {

@@ -7,12 +7,9 @@ public class Menu{
 
     private Context context;
 
-
     public Menu(Context con) {
         this.context = con;
     }
-
-
 
     public Sterownik setTemperaturaZalaczeniaPompy(Sterownik ster, Integer temp)
     {

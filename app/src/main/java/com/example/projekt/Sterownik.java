@@ -6,23 +6,17 @@ public class Sterownik extends PiecCO {
     private Integer tempZadana;
     private Boolean trybManualny;
     private Integer histereza;
-
-
-
     private Integer temperaturaZalaczeniaPompy;
     private Integer czasPrzerwyPodtrzymania;
     private PiecCO piecCO;
 
     public Sterownik() {
-
-
         this.tempZadana = 60;
         this.temperaturaZalaczeniaPompy = 35;
         dmuchawa.setPredkoscNadmuchu(5);
         this.czasPrzerwyPodtrzymania = 5;
         this.histereza = 5;
         trybManualny = false;
-
     }
 
     //Gettery:
@@ -50,8 +44,6 @@ public class Sterownik extends PiecCO {
     public Boolean getTrybManualny() { return trybManualny;}
 
     public Integer GetPoziomPaliwa() {return paleni.getPoziomPaliwaWPalenisku();}
-
-
 
     //Settery:
 
@@ -88,7 +80,6 @@ public class Sterownik extends PiecCO {
         @Override
         public void run() {
             do {
-
                 if (getOgien()) {
                     if(getTemperatura() > 90)
                     {
@@ -125,8 +116,6 @@ public class Sterownik extends PiecCO {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-
                     }else
                     {
                         try {
