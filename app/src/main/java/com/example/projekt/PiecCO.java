@@ -224,6 +224,10 @@ public class PiecCO extends Thread {
         //SetCzasPracyAktywnej(CZAS_MAKSYMALNY_CALKOWITY,CZAS_MAKSYMALNY_W_NADMUCHU);
     }
 
+    public void zgasPiec(){
+         paleni.Zgas();
+    }
+
     public void PodgrzejWode(){
         setTemperatura(getTemperatura() + getGrzanie());
     }

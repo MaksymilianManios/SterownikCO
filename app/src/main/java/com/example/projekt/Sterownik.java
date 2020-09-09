@@ -85,5 +85,132 @@ public class Sterownik extends PiecCO {
         paleni.setPoziomPaliwaWPalenisku( paleni.getPoziomPaliwaWPalenisku() + paleni.podajnik.PodajPaliwo());
     } // Uzupelnia palenisko o dawke paliwa
 
+
+    public Thread piec = new Thread() {
+
+        @Override
+        public void run() {
+            do {
+
+                if (getOgien()) {
+                    if(getTemperatura() > 90)
+                    {
+                        zgasPiec();
+                        setTrybManualny();
+                    }
+                    if (!getTrybManualny()) {
+
+                        if (getTemperatura() >= getTempZadana()) {
+                            dmuchawa.setPracaNadmuchu(false);
+                            //sterownik.setPracaPompy(true);
+                        /*
+                        try {
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        */
+                        } else {
+                            if (!(getTemperatura() > (getTempZadana() - getHistereza()))) {
+                                dmuchawa.setPracaNadmuchu(true);
+                                //sterownik.setPracaPompy(false);
+                            }
+                        }
+
+
+
+                        /*
+                        if (sterownik.getTemperatura() <= (sterownik.getTempZadana()) || sterownik.getTemperatura() < (sterownik.getTempZadana() - sterownik.getHistereza()))
+                        {
+                            sterownik.setPracaNadmuchu(true);
+                        }else {
+                            if (sterownik.getTemperatura() > (sterownik.getTempZadana() - sterownik.getHistereza())) {
+                                sterownik.setPracaNadmuchu(false);
+                            }
+                        }
+
+                         */
+                        if (getTemperatura() >= getTemperaturaZalaczeniaPompy()){
+                            pompa.setPracaPompy(true);
+                        }else{
+                            pompa.setPracaPompy(false);
+                        }
+                        if (GetPoziomPaliwa() <= 10) {
+                            setPracaPodajnika(true);
+                            UzpelnijPaliwoWPiecu();
+                        /*
+                            try {
+                                szybkoscNagrzewania();
+                                ZamienPaliwoNaCieplo();
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        */
+
+
+                        } else {
+                            setPracaPodajnika(false);
+                        }
+
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        //setPracaNadmuchu(true);
+                    /*
+                    for(int licznikPomocniczy = 0;licznikPomocniczy<czasPracyZNadmuchem  && getTemperatura() <= getTempZadana();licznikPomocniczy++){
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    setPracaNadmuchu(false);
+                    for(int licznikPomocniczy = 0; licznikPomocniczy<czasPracyBezNadmuchu && getTemperatura() <= TEMPERATURA_DOCELOWA;licznikPomocniczy++){
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                     */
+                    }else
+                    {
+                        try {
+                            szybkoscNagrzewania();
+                            ZamienPaliwoNaCieplo();
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    //setPracaPodajnika(true);
+                    RozpalPiecCO();
+
+                    //setPracaPodajnika(false);
+                }
+
+
+            }while(true);
+        }
+    };
+
+
 }
 

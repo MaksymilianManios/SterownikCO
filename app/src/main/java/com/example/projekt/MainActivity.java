@@ -32,18 +32,17 @@ public class MainActivity extends AppCompatActivity {
         sterownik = new Sterownik();
         //sterownik.thread.start();
         this.thread.start();
-        this.piec.start();
+        sterownik.piec.start();
         menuWlaczone = false;
         ustawienia_wlaczone = false;
         menu = new Menu(context);
-        liczba_w_ustawieniach = new Integer[] { 1,0,0 };
+        liczba_w_ustawieniach = new Integer[]{1, 0, 0};
         wyjscie_z_ustawien();
 
 
     }
 
-    public void wejscie_do_ustawien()
-    {
+    public void wejscie_do_ustawien() {
         btn = (Button) findViewById(R.id.plus_w_menu);
         btn.setEnabled(true);
         btn.setVisibility(view.VISIBLE);
@@ -89,44 +88,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void zwieksz(View view) {
-        if(menuWlaczone) {
+        if (menuWlaczone) {
             liczba_w_ustawieniach[0]++;
-            if(liczba_w_ustawieniach[0] == 7) { liczba_w_ustawieniach[0] = 1;}
+            if (liczba_w_ustawieniach[0] == 7) {
+                liczba_w_ustawieniach[0] = 1;
+            }
             textView = findViewById(R.id.ekran);
             textView.setText("A" + liczba_w_ustawieniach[0].toString());
-        }else if(sterownik.getTrybManualny())
-        {
-            if(sterownik.getPracaPodajnika())
-            {
+        } else if (sterownik.getTrybManualny()) {
+            if (sterownik.getPracaPodajnika()) {
                 sterownik.setPracaPodajnika(false);
-            }else sterownik.setPracaPodajnika(true);
+            } else sterownik.setPracaPodajnika(true);
         }
     }
 
-    public void zmniejsz(View view){
-        if(menuWlaczone) {
+    public void zmniejsz(View view) {
+        if (menuWlaczone) {
             liczba_w_ustawieniach[0]--;
-            if(liczba_w_ustawieniach[0] == 0) {liczba_w_ustawieniach[0] = 6;}
+            if (liczba_w_ustawieniach[0] == 0) {
+                liczba_w_ustawieniach[0] = 6;
+            }
             textView = findViewById(R.id.ekran);
             textView.setText("A" + liczba_w_ustawieniach[0].toString());
-        }else if(sterownik.getTrybManualny())
-        {
-            if(sterownik.dmuchawa.getPracaNadmuchu())
-            {
+        } else if (sterownik.getTrybManualny()) {
+            if (sterownik.dmuchawa.getPracaNadmuchu()) {
                 sterownik.dmuchawa.setPracaNadmuchu(false);
-            }else sterownik.dmuchawa.setPracaNadmuchu(true);
+            } else sterownik.dmuchawa.setPracaNadmuchu(true);
         }
 
     }
 
-    public void otworzMenu(View view)
-    {
-        if(!menuWlaczone) {
+    public void otworzMenu(View view) {
+        if (!menuWlaczone) {
             if (!sterownik.getTrybManualny()) {
                 menuWlaczone = true;
                 textView = findViewById(R.id.ekran);
                 textView.setText("A" + liczba_w_ustawieniach[0].toString());
-               // wejscie_do_ustawien();
+                // wejscie_do_ustawien();
                 btn = (Button) findViewById(R.id.opcje);
                 btn.setVisibility(view.INVISIBLE);
                 btn.setEnabled(false);
@@ -139,14 +137,13 @@ public class MainActivity extends AppCompatActivity {
                     sterownik.pompa.setPracaPompy(false);
                 } else sterownik.pompa.setPracaPompy(true);
             }
-        }else
-        {
+        } else {
             menu.zatwierdz(sterownik, liczba_w_ustawieniach);
         }
 
     }
 
-    public void ustawienia(View view){
+    public void ustawienia(View view) {
         ustawienia_wlaczone = true;
         wejscie_do_ustawien();
         liczba_w_ustawieniach = menu.zakresUstawienia(liczba_w_ustawieniach, sterownik);
@@ -154,37 +151,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void zatwierdz(View view){
+    public void zatwierdz(View view) {
         sterownik = menu.zatwierdz(sterownik, liczba_w_ustawieniach);
     }
 
-    public void zwiekszLiczbe(View view){
+    public void zwiekszLiczbe(View view) {
         liczba_w_ustawieniach[2]++;
-        if(liczba_w_ustawieniach[2] == liczba_w_ustawieniach[1]+1) { liczba_w_ustawieniach[2] = 0;}
+        if (liczba_w_ustawieniach[2] == liczba_w_ustawieniach[1] + 1) {
+            liczba_w_ustawieniach[2] = 0;
+        }
     }
 
-    public void zmniejszLiczbe(View view){
+    public void zmniejszLiczbe(View view) {
         liczba_w_ustawieniach[2]--;
-        if(liczba_w_ustawieniach[2] == -1) { liczba_w_ustawieniach[2] = liczba_w_ustawieniach[1];}
+        if (liczba_w_ustawieniach[2] == -1) {
+            liczba_w_ustawieniach[2] = liczba_w_ustawieniach[1];
+        }
     }
 
     public void wyjscie(View view) {
-        if(!sterownik.getTrybManualny()) {
+        if (!sterownik.getTrybManualny()) {
             menuWlaczone = false;
             liczba_w_ustawieniach[0] = 1;
             //wyjscie_z_menu();
             wyjscie_z_ustawien();
             ustawienia_wlaczone = false;
 
-        }else {
-            if(menuWlaczone)
-            {
+        } else {
+            if (menuWlaczone) {
                 menuWlaczone = false;
                 liczba_w_ustawieniach[0] = 1; //licznik = 1
                 wyjscie_z_ustawien();
                 ustawienia_wlaczone = false;
 
-            }else sterownik.setTrybManualny();
+            } else sterownik.setTrybManualny();
         }
 
     }
@@ -214,36 +214,36 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(!menuWlaczone) {
+                            if (!menuWlaczone) {
                                 switcha = (Switch) findViewById(R.id.kontrolkaNadmuchu);
-                                if(sterownik.dmuchawa.getPracaNadmuchu()){
+                                if (sterownik.dmuchawa.getPracaNadmuchu()) {
                                     switcha.setChecked(true);
-                                }else switcha.setChecked(false);
+                                } else switcha.setChecked(false);
 
                                 switcha = (Switch) findViewById(R.id.kontrolkaPodajnika);
-                                if(sterownik.getPracaPodajnika()){
+                                if (sterownik.getPracaPodajnika()) {
                                     switcha.setChecked(true);
-                                }else switcha.setChecked(false);
+                                } else switcha.setChecked(false);
 
                                 switcha = (Switch) findViewById(R.id.kontrolkaPompy);
-                                if(sterownik.pompa.getPracaPompy()){
+                                if (sterownik.pompa.getPracaPompy()) {
                                     switcha.setChecked(true);
-                                }else switcha.setChecked(false);
+                                } else switcha.setChecked(false);
 
                                 switcha = (Switch) findViewById(R.id.kontrolkaOgnia);
-                                if(sterownik.getOgien()){
+                                if (sterownik.getOgien()) {
                                     switcha.setChecked(true);
-                                }else switcha.setChecked(false);
+                                } else switcha.setChecked(false);
 
                                 switcha = (Switch) findViewById(R.id.kontrolkaPracyRecznej);
-                                if(sterownik.getTrybManualny()){
+                                if (sterownik.getTrybManualny()) {
                                     switcha.setChecked(true);
-                                }else switcha.setChecked(false);
+                                } else switcha.setChecked(false);
 
                                 textView = findViewById(R.id.ekran);
                                 textView.setText(Integer.toString(sterownik.getTemperatura()));
                             }
-                            if(ustawienia_wlaczone){
+                            if (ustawienia_wlaczone) {
                                 textView = findViewById(R.id.ekran);
                                 textView.setText(liczba_w_ustawieniach[2].toString());
                             }
@@ -255,126 +255,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
-    public Thread piec = new Thread() {
-
-        @Override
-        public void run() {
-            do {
-
-                if (sterownik.getOgien()) {
-                    if (!sterownik.getTrybManualny()) {
-
-                        if (sterownik.getTemperatura() >= sterownik.getTempZadana()) {
-                            sterownik.dmuchawa.setPracaNadmuchu(false);
-                            //sterownik.setPracaPompy(true);
-                        /*
-                        try {
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        */
-                        } else {
-                            if (!(sterownik.getTemperatura() > (sterownik.getTempZadana() - sterownik.getHistereza()))) {
-                                sterownik.dmuchawa.setPracaNadmuchu(true);
-                                //sterownik.setPracaPompy(false);
-                            }
-                        }
-
-
-
-                        /*
-                        if (sterownik.getTemperatura() <= (sterownik.getTempZadana()) || sterownik.getTemperatura() < (sterownik.getTempZadana() - sterownik.getHistereza()))
-                        {
-                            sterownik.setPracaNadmuchu(true);
-                        }else {
-                            if (sterownik.getTemperatura() > (sterownik.getTempZadana() - sterownik.getHistereza())) {
-                                sterownik.setPracaNadmuchu(false);
-                            }
-                        }
-
-                         */
-                        if (sterownik.getTemperatura() >= sterownik.getTemperaturaZalaczeniaPompy()){
-                            sterownik.pompa.setPracaPompy(true);
-                        }else{
-                            sterownik.pompa.setPracaPompy(false);
-                        }
-                        if (sterownik.GetPoziomPaliwa() <= 10) {
-                            sterownik.setPracaPodajnika(true);
-                            sterownik.UzpelnijPaliwoWPiecu();
-                        /*
-                            try {
-                                szybkoscNagrzewania();
-                                ZamienPaliwoNaCieplo();
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        */
-
-
-                        } else {
-                            sterownik.setPracaPodajnika(false);
-                        }
-
-                        try {
-                            sterownik.szybkoscNagrzewania();
-                            sterownik.ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        //setPracaNadmuchu(true);
-                    /*
-                    for(int licznikPomocniczy = 0;licznikPomocniczy<czasPracyZNadmuchem  && getTemperatura() <= getTempZadana();licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    setPracaNadmuchu(false);
-                    for(int licznikPomocniczy = 0; licznikPomocniczy<czasPracyBezNadmuchu && getTemperatura() <= TEMPERATURA_DOCELOWA;licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                     */
-                    }else
-                    {
-                        try {
-                            sterownik.szybkoscNagrzewania();
-                            sterownik.ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } else {
-                        //setPracaPodajnika(true);
-                     sterownik.RozpalPiecCO();
-
-                        //setPracaPodajnika(false);
-                }
-
-
-            }while(true);
-        }
-    };
 
 }
 
