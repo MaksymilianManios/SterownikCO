@@ -7,10 +7,7 @@ public class Sterownik extends PiecCO {
     private Boolean trybManualny;
     private Integer histereza;
 
-    /*
-    private Integer czasPracyPodajnika;
-    private Integer czasPrzerwyPodajnika;
-     */
+
 
     private Integer temperaturaZalaczeniaPompy;
     private Integer czasPrzerwyPodtrzymania;
@@ -82,7 +79,7 @@ public class Sterownik extends PiecCO {
     }
 
     public void UzpelnijPaliwoWPiecu() {
-        paleni.setPoziomPaliwaWPalenisku( paleni.getPoziomPaliwaWPalenisku() + paleni.podajnik.PodajPaliwo());
+        paleni.uzupelnijPaliwo();
     } // Uzupelnia palenisko o dawke paliwa
 
 
@@ -102,38 +99,12 @@ public class Sterownik extends PiecCO {
 
                         if (getTemperatura() >= getTempZadana()) {
                             dmuchawa.setPracaNadmuchu(false);
-                            //sterownik.setPracaPompy(true);
-                        /*
-                        try {
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
-                        */
                         } else {
                             if (!(getTemperatura() > (getTempZadana() - getHistereza()))) {
                                 dmuchawa.setPracaNadmuchu(true);
-                                //sterownik.setPracaPompy(false);
                             }
                         }
-
-
-
-                        /*
-                        if (sterownik.getTemperatura() <= (sterownik.getTempZadana()) || sterownik.getTemperatura() < (sterownik.getTempZadana() - sterownik.getHistereza()))
-                        {
-                            sterownik.setPracaNadmuchu(true);
-                        }else {
-                            if (sterownik.getTemperatura() > (sterownik.getTempZadana() - sterownik.getHistereza())) {
-                                sterownik.setPracaNadmuchu(false);
-                            }
-                        }
-
-                         */
                         if (getTemperatura() >= getTemperaturaZalaczeniaPompy()){
                             pompa.setPracaPompy(true);
                         }else{
@@ -142,16 +113,6 @@ public class Sterownik extends PiecCO {
                         if (GetPoziomPaliwa() <= 10) {
                             setPracaPodajnika(true);
                             UzpelnijPaliwoWPiecu();
-                        /*
-                            try {
-                                szybkoscNagrzewania();
-                                ZamienPaliwoNaCieplo();
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        */
-
 
                         } else {
                             setPracaPodajnika(false);
@@ -165,30 +126,7 @@ public class Sterownik extends PiecCO {
                             e.printStackTrace();
                         }
 
-                        //setPracaNadmuchu(true);
-                    /*
-                    for(int licznikPomocniczy = 0;licznikPomocniczy<czasPracyZNadmuchem  && getTemperatura() <= getTempZadana();licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    setPracaNadmuchu(false);
-                    for(int licznikPomocniczy = 0; licznikPomocniczy<czasPracyBezNadmuchu && getTemperatura() <= TEMPERATURA_DOCELOWA;licznikPomocniczy++){
-                        try {
-                            szybkoscNagrzewania();
-                            ZamienPaliwoNaCieplo();
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
-                    }
-
-                     */
                     }else
                     {
                         try {
@@ -200,17 +138,10 @@ public class Sterownik extends PiecCO {
                         }
                     }
                 } else {
-                    //setPracaPodajnika(true);
                     RozpalPiecCO();
-
-                    //setPracaPodajnika(false);
                 }
-
-
             }while(true);
         }
     };
-
-
 }
 

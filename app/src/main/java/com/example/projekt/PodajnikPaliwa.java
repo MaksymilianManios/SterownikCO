@@ -20,61 +20,7 @@ public class PodajnikPaliwa {
         this.pracaPodajnika = pracaPodajnika;
     }
 
-
-    /*
-    public void setPracaPodajnika(Boolean pracaPodajnika) {
-        this.pracaPodajnika = pracaPodajnika;
-    }
-
-    public void UzupelnijPaliwo(){
-        zbiornikPaliwa += UZUPELNIAJACA_PORCJA_PALIWA;
-    }
-    public Integer GetPoziomPaliwa(){
-        return zbiornikPaliwa;
-    }
-    public void SetPracaAutomatyczna(boolean czyWPracyAutomatycznej){
-        this.czyWPracyAutomatycznej = czyWPracyAutomatycznej;
-    }
-
-    public void SetPodawacPaliwo(boolean czyPodawacPaliwo){
-        this.czyPodawacPaliwo = czyPodawacPaliwo;
-    }
-
-     */
     public Integer PodajPaliwo(){
-        /*
-        if(czyPodawacPaliwo){
-            if(czyWPracyAutomatycznej){
-                while(IloscPaliwa > zbiornikPaliwa){
-                    UzupelnijPaliwo();
-                }
-                zbiornikPaliwa -= IloscPaliwa;
-            }else {
-                if (IloscPaliwa > zbiornikPaliwa) {
-                    IloscPaliwa = zbiornikPaliwa;
-                    zbiornikPaliwa = 0;
-                } else{
-                    zbiornikPaliwa -= IloscPaliwa;
-                }
-            }
-            return IloscPaliwa;
-        }
-        return 0;
-
-         */
-
         return DAWKA_PALIWA;
     }
-    /*
-    public Integer PodajPaliwo(){
-        if(zbiornikPaliwa<DAWKA_PALIWA){
-            UzupelnijPaliwo();
-        }
-        zbiornikPaliwa -= DAWKA_PALIWA;
-        return DAWKA_PALIWA;
-    }
-
-     */
-
-
 }

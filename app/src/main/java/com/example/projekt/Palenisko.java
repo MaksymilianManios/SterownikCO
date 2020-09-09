@@ -17,17 +17,6 @@ public class Palenisko {
         this.poziomPaliwaWPalenisku = 100;
     }
 
-
-
-
-    /*
-   public void AddPaliwaWPalenisku(int DawkaPaliwa){
-        paliwaWPalenisku += DawkaPaliwa;
-       // KielichPrzepelniony();
-    }
-
-
-     */
     public Integer getPoziomPaliwaWPalenisku() {
         return poziomPaliwaWPalenisku;
     }
@@ -37,33 +26,17 @@ public class Palenisko {
     public void setPoziomPaliwaWPalenisku(Integer poziomPaliwaWPalenisku) {
         this.poziomPaliwaWPalenisku = poziomPaliwaWPalenisku;
     }
-    /*
-    private void KielichPrzepelniony(){
-        if(paliwaWPalenisku>MAKSYMALNY_POZIOM_PALIWA){
-            paliwaWPalenisku = MAKSYMALNY_POZIOM_PALIWA;
-            czyPlonie = false;
-        }
-    }
 
-
-    private void KielichPusty(){
-        if(paliwaWPalenisku<MINIMALNY_POZIOM_PALIWA){
-            czyPlonie = false;
-        }
-    }
-
-     */
 
     public void Zgas(){
         czyPlonie = false;
     }
 
     public void Rozpal(){
-        //KielichPrzepelniony();
+
         if(getPoziomPaliwaWPalenisku() > 0) {
             czyPlonie = true;
         }
-       // KielichPusty();
     }
 
     public void uzupelnijPaliwo(){

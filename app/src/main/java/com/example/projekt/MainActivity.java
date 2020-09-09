@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Boolean menuWlaczone;
     private Boolean ustawienia_wlaczone;
-    //private Integer licznik = 1;
     private Integer[] liczba_w_ustawieniach;
     public TextView textView;
     public Switch switcha;
@@ -28,9 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context = getApplicationContext();
-        //setContentView(R.layout.piec_layout);
         sterownik = new Sterownik();
-        //sterownik.thread.start();
         this.thread.start();
         sterownik.piec.start();
         menuWlaczone = false;
@@ -147,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
         ustawienia_wlaczone = true;
         wejscie_do_ustawien();
         liczba_w_ustawieniach = menu.zakresUstawienia(liczba_w_ustawieniach, sterownik);
-        //menu.setTrybManualny();
-
     }
 
     public void zatwierdz(View view) {
@@ -173,34 +168,21 @@ public class MainActivity extends AppCompatActivity {
         if (!sterownik.getTrybManualny()) {
             menuWlaczone = false;
             liczba_w_ustawieniach[0] = 1;
-            //wyjscie_z_menu();
             wyjscie_z_ustawien();
             ustawienia_wlaczone = false;
 
         } else {
             if (menuWlaczone) {
                 menuWlaczone = false;
-                liczba_w_ustawieniach[0] = 1; //licznik = 1
+                liczba_w_ustawieniach[0] = 1;
                 wyjscie_z_ustawien();
                 ustawienia_wlaczone = false;
-
             } else sterownik.setTrybManualny();
         }
 
     }
 
-    /*public Thread watek_zliczajacy = new Thread(new Runnable() {
-        public void run() {
-            do{
-                               try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
-            }while(true);
-        }
-    });*/
 
 
     Thread thread = new Thread() {
@@ -254,8 +236,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
-
 }
 
 
