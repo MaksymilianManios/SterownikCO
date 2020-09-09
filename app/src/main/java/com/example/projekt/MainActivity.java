@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public void zwieksz(View view) {
         if(menuWlaczone) {
             liczba_w_ustawieniach[0]++;
-            if(liczba_w_ustawieniach[0] == 5) { liczba_w_ustawieniach[0] = 1;}
+            if(liczba_w_ustawieniach[0] == 7) { liczba_w_ustawieniach[0] = 1;}
             textView = findViewById(R.id.ekran);
             textView.setText("A" + liczba_w_ustawieniach[0].toString());
         }else if(sterownik.getTrybManualny())
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public void zmniejsz(View view){
         if(menuWlaczone) {
             liczba_w_ustawieniach[0]--;
-            if(liczba_w_ustawieniach[0] == 0) {liczba_w_ustawieniach[0] = 4;}
+            if(liczba_w_ustawieniach[0] == 0) {liczba_w_ustawieniach[0] = 6;}
             textView = findViewById(R.id.ekran);
             textView.setText("A" + liczba_w_ustawieniach[0].toString());
         }else if(sterownik.getTrybManualny())
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                         }else{
                             sterownik.pompa.setPracaPompy(false);
                         }
-                        if (sterownik.getPoziomPaliwaWPiecu() <= 10) {
+                        if (sterownik.GetPoziomPaliwa() <= 10) {
                             sterownik.setPracaPodajnika(true);
                             sterownik.UzpelnijPaliwoWPiecu();
                         /*

@@ -2,26 +2,30 @@ package com.example.projekt;
 
 public class PiecCO extends Thread {
     // PALENISKO
+    public Palenisko paleni;
     public static final int WSPOLCZYNNIK_PRACY_I = 0; // - piec sie nie pali
     public static final int WSPOLCZYNNIK_PRACY_II = 1; // - nadmuch OFF
     public static final int WSPOLCZYNNIK_PRACY_III = 2; // - nadmuch ON
 
+    /*
     // PODAJNIK
     public static final int POJEMNOSC_ZASOBNIKA = 2000;
     public static final int POJEMNOSC_PALENISKA = 100;
     public static final int UZUPELNIENIE_ZASOBNIKA = 250;
     public static final int DAWKA_PALIWA = 10;
 
+     */
+
     // NADMUCH
     public Dmuchawa dmuchawa;
     // POMPA
     public OEC pompa;
-    public static final int TEMPERATURA_DOCELOWA = 60;
+    //public static final int TEMPERATURA_DOCELOWA = 60;
     public static final int TEMPERATURA_POKOJOWA = 20;
-    public static final int AMPLITUDA_TEMPERATUR = TEMPERATURA_DOCELOWA - TEMPERATURA_POKOJOWA;
+    //public static final int AMPLITUDA_TEMPERATUR = TEMPERATURA_DOCELOWA - TEMPERATURA_POKOJOWA;
     // CZAS PRACY AKTYWNEJ
-    public static final int CZAS_MAKSYMALNY_CALKOWITY = 40;
-    public static final int CZAS_MAKSYMALNY_W_NADMUCHU = CZAS_MAKSYMALNY_CALKOWITY/WSPOLCZYNNIK_PRACY_III/2;
+    //public static final int CZAS_MAKSYMALNY_CALKOWITY = 40;
+    //public static final int CZAS_MAKSYMALNY_W_NADMUCHU = CZAS_MAKSYMALNY_CALKOWITY/WSPOLCZYNNIK_PRACY_III/2;
 
 
     // zmienne kontrolne :
@@ -31,16 +35,16 @@ public class PiecCO extends Thread {
     private Boolean pompaPracuje;    // <-true jesli pracuje
     */
     public Boolean czyMaSiePalic; // decyduje czy funkcja run ma przerwac petle
-    public Integer czasPracyZNadmuchem = 10;
-    public Integer czasPracyBezNadmuchu = 20;
-    private Integer czasPracyAktywnej = 30;
+    //public Integer czasPracyZNadmuchem = 10;
+   // public Integer czasPracyBezNadmuchu = 20;
+    //private Integer czasPracyAktywnej = 30;
     private Integer poziomPaliwaWPiecu;
     private Integer zapasPaliwaWZasobniku;
     private Integer spalanie = 0;
     private Integer grzanie = 0;
     private Integer temperatura = 0;
 
-
+    /*
     public void setPoziomPaliwaWPiecu(Integer poziomPaliwaWPiecu) {
         this.poziomPaliwaWPiecu = poziomPaliwaWPiecu;
     }
@@ -48,8 +52,7 @@ public class PiecCO extends Thread {
     public void setZapasPaliwaWZasobniku(Integer zapasPaliwaWZasobniku) {
         this.zapasPaliwaWZasobniku = zapasPaliwaWZasobniku;
     }
-
-
+     */
 
 
 
@@ -59,12 +62,15 @@ public class PiecCO extends Thread {
 
 
     // Gettery :
+    /*
    public void setCzasPracyAktywnej(Integer czasPracyAktywnej) {
        this.czasPracyAktywnej = czasPracyAktywnej;
    }
 
+     */
+
     public Boolean getOgien() {
-        return ogien;
+        return paleni.getOgi();
     }
 
     public Integer getGrzanie() {
@@ -78,9 +84,14 @@ public class PiecCO extends Thread {
     public void setSpalanie(Integer spalanie) {
         this.spalanie = spalanie;
     }
+
+    /*
     public Integer getPoziomPaliwaWPiecu() {
         return poziomPaliwaWPiecu;
     }
+
+
+     */
     public Integer getZapasPaliwaWZasobniku() {
         return zapasPaliwaWZasobniku;
     }
@@ -93,7 +104,7 @@ public class PiecCO extends Thread {
     public void setTemperatura(Integer temperatura) {
         this.temperatura = temperatura;
     }
-    public Integer getCzasPracyZNadmuchem(){
+   /* public Integer getCzasPracyZNadmuchem(){
         return czasPracyZNadmuchem;
     }
     public Integer getCzasPracyBezNadmuchu(){
@@ -112,7 +123,12 @@ public class PiecCO extends Thread {
     }
 
      */
+
+
     // Settery :
+
+
+    /*
     public void SetCzasPracyAktywnej(int CzasPracyAktywnej,int CzasPracyZNadmuchem){
         if(CzasPracyAktywnej>CZAS_MAKSYMALNY_CALKOWITY){
             CzasPracyAktywnej = CZAS_MAKSYMALNY_CALKOWITY;
@@ -131,13 +147,12 @@ public class PiecCO extends Thread {
     public void SetczasPracyBezNadmuchu(){
         czasPracyBezNadmuchu = getCzasPracyAktywnej()-getCzasPracyZNadmuchem();
     }
-    public void setOgien(Boolean ogien) {
-        this.ogien = ogien;
-    }
+
+
     public void SetTemperaturaPoPompowaniu(){
         setTemperatura(getTemperatura() - 10);
     } // Ustawia temperature na pokojowa
-    /*
+
     private void SetWspolczynnikPracyI(){
         spalanie = WSPOLCZYNNIK_PRACY_I;
         grzanie = WSPOLCZYNNIK_PRACY_I;
@@ -156,8 +171,8 @@ public class PiecCO extends Thread {
 
     public void RozpalPiecCO() {
 
-        if (getPoziomPaliwaWPiecu() > 0) {
-            setOgien(true);
+        if (paleni.getPoziomPaliwaWPalenisku() > 0) {
+            paleni.Rozpal();
         }
     }
 
@@ -184,45 +199,35 @@ public class PiecCO extends Thread {
         }
     }
 
+    /*
     public void TransferPaliwaZasobnikPalenisko() {
         ZabierzPaliwoZZasobnika();
         UzpelnijPaliwoWPiecu();
     } // Symulacja pracy slimaka
 
-    private void ZabierzPaliwoZZasobnika() {
-        if (getZapasPaliwaWZasobniku() <= DAWKA_PALIWA) {
-            UzpelnijZasobnikPaliwa();
-        }
-        setZapasPaliwaWZasobniku(getZapasPaliwaWZasobniku() - DAWKA_PALIWA);
-    } // Zabiera dawke paliwa z zasobnika
 
-    public void UzpelnijPaliwoWPiecu() {
-        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() + DAWKA_PALIWA);
-    } // Uzupelnia palenisko o dawke paliwa
+     */
+    /*     */
 
-    private void UzpelnijZasobnikPaliwa() {
-        setZapasPaliwaWZasobniku(POJEMNOSC_ZASOBNIKA);
-    }  // Wypelnia zasobnik paliwa
 
-    public PiecCO(){
+     public PiecCO(){
         czyMaSiePalic = true;
         this.ogien = false;
         dmuchawa = new Dmuchawa();
         pompa = new OEC();
+        paleni = new Palenisko();
         // podajnikPracuje = false;
         // nadmuchPracuje = false;
         // pompaPracuje = false;
-        zapasPaliwaWZasobniku = UZUPELNIENIE_ZASOBNIKA*2 ;
-        poziomPaliwaWPiecu = POJEMNOSC_PALENISKA/2;
         spalanie = 0;
         temperatura = TEMPERATURA_POKOJOWA;
-        SetCzasPracyAktywnej(CZAS_MAKSYMALNY_CALKOWITY,CZAS_MAKSYMALNY_W_NADMUCHU);
+        //SetCzasPracyAktywnej(CZAS_MAKSYMALNY_CALKOWITY,CZAS_MAKSYMALNY_W_NADMUCHU);
     }
 
     public void PodgrzejWode(){
         setTemperatura(getTemperatura() + getGrzanie());
     }
     public void SpalPaliwo(){
-        setPoziomPaliwaWPiecu(getPoziomPaliwaWPiecu() - getSpalanie());
+        paleni.setPoziomPaliwaWPalenisku(paleni.getPoziomPaliwaWPalenisku() - getSpalanie());
     }
 }

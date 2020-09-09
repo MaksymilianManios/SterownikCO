@@ -31,6 +31,12 @@ public class Menu{
         ster.dmuchawa.setPredkoscNadmuchu(predkosc);
         return ster;
     }
+
+    public Sterownik setTemperaturaZadana(Sterownik ster, Integer temperatura){
+        ster.setTempZadana(temperatura);
+        return ster;
+    }
+
     public Sterownik zatwierdz(Sterownik sterownik, Integer[] liczba)
     {
         int duration;
@@ -46,7 +52,17 @@ public class Menu{
                 toast = Toast.makeText(context, text, duration);
                 toast.show();
                 return sterownik;
-            case 2:
+
+            case 2://ustawienie temperatury zadanej
+                sterownik = setTemperaturaZadana(sterownik, liczba[2]);
+                text = "ustawiono temperature zadana";
+                duration = Toast.LENGTH_SHORT;
+
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return sterownik;
+
+            case 3://ustawienie temperatury zalaczneia pompy
                 sterownik = setTemperaturaZalaczeniaPompy(sterownik, liczba[2]);//temperatura załączenia pompy
                 text = "ustawiono temperature zalaczenia pompy";
                 duration = Toast.LENGTH_SHORT;
@@ -55,15 +71,15 @@ public class Menu{
                 toast.show();
                 return sterownik;
 
-            case 3: //ustaweinie prdekosci nawiewu
-                sterownik = setTemperaturaZalaczeniaPompy(sterownik, liczba[2]);//temperatura załączenia pompy
+            case 4: //ustaweinie prdekosci nawiewu
+                sterownik = setPredkoscNadmuchu(sterownik, liczba[2]);//temperatura załączenia pompy
                 text = "ustawiono predkosc obrotu dmuchawy";
                 duration = Toast.LENGTH_SHORT;
 
                 toast = Toast.makeText(context, text, duration);
                 toast.show();
                 return sterownik;
-            case 4: //tryb reczny
+            case 5: //tryb reczny
                 if(liczba[2] == 1) {
                     sterownik.setTrybManualny();
                     text = "wlaczono tryb manualny";
@@ -76,7 +92,7 @@ public class Menu{
                 return sterownik;
 
 
-            case 5: //ustawinia fabryzcne
+            case 6: //ustawinia fabryzcne
                 if(liczba[2] == 1) {
                     Sterownik ster;
                     ster = new Sterownik();
@@ -110,25 +126,29 @@ public class Menu{
                 numerOpcji[1] = 10;
                 numerOpcji[2] = ster.getHistereza();
                 return numerOpcji;
+            case 2: //ustwaeinie temperatury zadanej
+                numerOpcji[1] = 90;
+                numerOpcji[2] = ster.getTempZadana();
+                return numerOpcji;
 
-            case 2:
+            case 3: //ustwaeinie temperatury zalaczenia ompy
                 numerOpcji[1] = 60;
                 numerOpcji[2] = ster.getTemperaturaZalaczeniaPompy();
                 return numerOpcji;
 
-            case 3: //ustawienie predkości nadmuchu
+            case 4: //ustawienie predkości nadmuchu
                 numerOpcji[1] = 10;
                 numerOpcji[2] = ster.dmuchawa.getPredkoscNadmuchu();
                 return numerOpcji;
 
-            case 4: //tryb reczny
+            case 5: //tryb reczny
                 numerOpcji[1] = 1;
                 if(ster.getTrybManualny()){
                     numerOpcji[2] = 1;
                 }else numerOpcji[2] = 0;
                 return numerOpcji;
 
-            case 5: //ustawinia fabryzcne
+            case 6: //ustawinia fabryzcne
                 numerOpcji[1] = 1;
                 numerOpcji[2] = 0;
                 return numerOpcji;

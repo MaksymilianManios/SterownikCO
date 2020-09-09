@@ -5,24 +5,23 @@ import android.support.v4.app.INotificationSideChannel;
 
 public class PodajnikPaliwa {
     public static final int UZUPELNIAJACA_PORCJA_PALIWA = 100;
-    public static final int DAWKA_PALIWA = 10;
-
-    private Boolean czyWPracyAutomatycznej;
-    private Boolean czyPodawacPaliwo;
+    public static final int DAWKA_PALIWA = 30;
     private Boolean pracaPodajnika;
-    private Integer zbiornikPaliwa;
-
 
     public PodajnikPaliwa() {
-        czyWPracyAutomatycznej = true;
-        czyPodawacPaliwo = false;
-        zbiornikPaliwa = 0;
+        this.pracaPodajnika = false;
     }
 
     public Boolean getPracaPodajnika() {
         return pracaPodajnika;
     }
 
+    public void setPracaPodajnika(Boolean pracaPodajnika) {
+        this.pracaPodajnika = pracaPodajnika;
+    }
+
+
+    /*
     public void setPracaPodajnika(Boolean pracaPodajnika) {
         this.pracaPodajnika = pracaPodajnika;
     }
@@ -36,10 +35,14 @@ public class PodajnikPaliwa {
     public void SetPracaAutomatyczna(boolean czyWPracyAutomatycznej){
         this.czyWPracyAutomatycznej = czyWPracyAutomatycznej;
     }
+
     public void SetPodawacPaliwo(boolean czyPodawacPaliwo){
         this.czyPodawacPaliwo = czyPodawacPaliwo;
     }
-    public Integer PodajPaliwo(Integer IloscPaliwa){
+
+     */
+    public Integer PodajPaliwo(){
+        /*
         if(czyPodawacPaliwo){
             if(czyWPracyAutomatycznej){
                 while(IloscPaliwa > zbiornikPaliwa){
@@ -57,7 +60,12 @@ public class PodajnikPaliwa {
             return IloscPaliwa;
         }
         return 0;
+
+         */
+
+        return DAWKA_PALIWA;
     }
+    /*
     public Integer PodajPaliwo(){
         if(zbiornikPaliwa<DAWKA_PALIWA){
             UzupelnijPaliwo();
@@ -65,5 +73,8 @@ public class PodajnikPaliwa {
         zbiornikPaliwa -= DAWKA_PALIWA;
         return DAWKA_PALIWA;
     }
+
+     */
+
 
 }

@@ -2,22 +2,24 @@ package com.example.projekt;
 
 public class Sterownik extends PiecCO {
     //public Piec piec;
-    private Boolean pracaPodajnika;
+
     private Integer tempZadana;
     private Boolean trybManualny;
     private Integer histereza;
+
+    /*
     private Integer czasPracyPodajnika;
     private Integer czasPrzerwyPodajnika;
+     */
+
     private Integer temperaturaZalaczeniaPompy;
     private Integer czasPrzerwyPodtrzymania;
     private PiecCO piecCO;
 
     public Sterownik() {
 
-        this.pracaPodajnika = false;
+
         this.tempZadana = 60;
-        this.czasPracyPodajnika = 20;
-        this.czasPrzerwyPodajnika = 40;
         this.temperaturaZalaczeniaPompy = 35;
         dmuchawa.setPredkoscNadmuchu(5);
         this.czasPrzerwyPodtrzymania = 5;
@@ -28,7 +30,6 @@ public class Sterownik extends PiecCO {
 
     //Gettery:
 
-
     public Integer getTemperaturaZalaczeniaPompy() {
         return temperaturaZalaczeniaPompy;
     }
@@ -37,28 +38,21 @@ public class Sterownik extends PiecCO {
         return czasPrzerwyPodtrzymania;
     }
 
-    public Boolean getPracaPodajnika() {
-        return pracaPodajnika;
-    }
-
     public Integer getTempZadana() {
         return tempZadana;
-    }
-
-    public Integer getCzasPracyPodajnika() {
-        return czasPracyPodajnika;
-    }
-
-    public Integer getCzasPrzerwyPodajnika() {
-        return czasPrzerwyPodajnika;
     }
 
     public Integer getHistereza() {
         return histereza;
     }
 
+    public Boolean getPracaPodajnika(){
+        return paleni.podajnik.getPracaPodajnika();
+    }
+
     public Boolean getTrybManualny() { return trybManualny;}
 
+    public Integer GetPoziomPaliwa() {return paleni.getPoziomPaliwaWPalenisku();}
 
 
 
@@ -68,24 +62,8 @@ public class Sterownik extends PiecCO {
         this.temperaturaZalaczeniaPompy = temperaturaZalaczeniaPompy;
     }
 
-    public void setCzasPrzerwyPodtrzymania(Integer czasPrzerwyPodtrzymania) {
-        this.czasPrzerwyPodtrzymania = czasPrzerwyPodtrzymania;
-    }
-
-    public void setPracaPodajnika(Boolean pracaPodajnika) {
-        this.pracaPodajnika = pracaPodajnika;
-    }
-
     public void setTempZadana(Integer tempZadana) {
         this.tempZadana = tempZadana;
-    }
-
-    public void setCzasPracyPodajnika(Integer czasPracyPodajnika) {
-        this.czasPracyPodajnika = czasPracyPodajnika;
-    }
-
-    public void setCzasPrzerwyPodajnika(Integer czasPrzerwyPodajnika) {
-        this.czasPrzerwyPodajnika = czasPrzerwyPodajnika;
     }
 
     public void setHistereza(Integer histereza) {
@@ -99,8 +77,13 @@ public class Sterownik extends PiecCO {
 
     }
 
+    public void  setPracaPodajnika(Boolean praca){
+        paleni.podajnik.setPracaPodajnika(praca);
+    }
 
-
+    public void UzpelnijPaliwoWPiecu() {
+        paleni.setPoziomPaliwaWPalenisku( paleni.getPoziomPaliwaWPalenisku() + paleni.podajnik.PodajPaliwo());
+    } // Uzupelnia palenisko o dawke paliwa
 
 }
 
