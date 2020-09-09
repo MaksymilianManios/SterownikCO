@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btn;
     private View view;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
