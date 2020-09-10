@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     public Sterownik sterownik;
     public Menu menu;
     private Button btn;
-    private View view;
+    private View view;                                                                             
 
 
     @Override
@@ -209,11 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 switcha = (Switch) findViewById(R.id.kontrolkaPompy);
                                 if (sterownik.pompa.getPracaPompy()) {
-                                    switcha.setChecked(true);
-                                } else switcha.setChecked(false);
-
-                                switcha = (Switch) findViewById(R.id.kontrolkaOgnia);
-                                if (sterownik.getOgien()) {
                                     switcha.setChecked(true);
                                 } else switcha.setChecked(false);
 
